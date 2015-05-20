@@ -2,7 +2,7 @@
 /*
 Plugin Name: Gravity Forms - List Field Date Picker
 Description: Gives the option of adding a date picker to a list field column
-Version: 1.0
+Version: 1.1
 Author: Adrian Gordon
 Author URI: http://www.itsupportguides.com 
 License: GPL2
@@ -38,7 +38,7 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
 			} else {
 				foreach($field["choices"] as $choice){
 					if ($text == $choice["text"]  &&  $choice["isDatePicker"] == true) {
-					$new_input = str_replace("<input ","<input class='datepicker' ",$input);
+					$new_input = str_replace("<input ","<input class='datepicker ".$choice["isDatePickerFormat"]." ' ",$input);
 					return $new_input;
 					} else if ($text == $choice["text"]) {
 					return $input;
@@ -66,7 +66,7 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
 				jQuery(this).find('.datepicker').removeClass('hasDatepicker').removeAttr('id');
 				jQuery(this).find('.datepicker').unbind('.datepicker').datepicker();
 				jQuery(this).find('.datepicker').datepicker('destroy');
-				jQuery(this).find('.datepicker').datepicker();
+				gformInitDatepicker();
 			});
 		}
 
@@ -88,7 +88,6 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
 		?>
 		<script type='text/javascript'>
 		function GetFieldChoices(field){
-			var imagesUrl = '<?php echo GFCommon::get_base_url() . "/images"?>';
 			if(field.choices == undefined)
 				return "";
 
@@ -105,6 +104,7 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
 				if(!price)
 					price = "";
 				var isDatePicker = field.choices[i].isDatePicker ? "checked" : "";
+				var isDatePickerFormat = field.choices[i].isDatePickerFormat;
 				
 				str += "<li data-index='" + i + "'>";
 				str += "<i class='fa fa-sort field-choice-handle'></i> ";
@@ -125,10 +125,26 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
 					str += "<a class='gf_delete_field_choice' onclick=\"DeleteFieldChoice(" + i + ");\"><i class='fa fa-minus-square'></i></a>";
 				
 				if (inputType == 'list' ){
-				str += "		<div style='white-space:nowrap'>";
+				str += "<div style='white-space:nowrap'>";
 				 str += "<input type='checkbox' name='choice_datepicker' id='" + inputType + "_choice_datepicker_" + i + "' " + isDatePicker + " onclick=\"SetFieldChoice('" + inputType + "', " + i + ");\" /> ";
 				 str += "	<label class='inline' for='"+ inputType + "_choice_datepicker_" + i + "'>Date field</label>";
+				 
+				str += "<div style='display:none' class='itsg_date_format'>";
+				 str += "<label for='" + inputType + "_choice_datepickerformat_" + i + "'>";
+				 str += "Date Format</label>";
+				 str += "<select class='choice_datepickerformat' id='" + inputType + "_choice_datepickerformat_" + i + "' onclick=\"SetFieldChoice('" + inputType + "', " + i + ");\">";
+				 str += "<option value='mdy'>mm/dd/yyyy</option>";
+				 str += "<option value='dmy'>dd/mm/yyyy</option>";
+				 str += "<option value='dmy_dash'>dd-mm-yyyy</option>";
+				 str += "<option value='dmy_dot'>dd.mm.yyyy</option>";
+				 str += "<option value='ymd_slash'>yyyy/mm/dd</option>";
+				 str += "<option value='ymd_dash'>yyyy-mm-dd</option>";
+				 str += "<option value='ymd_dot'>yyyy.mm.dd</option>";
+				 str += "</select>";
 				 str += "</div>";
+				 str += "</div>";
+				 
+				 
 				 }
 				 
 				str += "</li>";
@@ -146,13 +162,18 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
 			var element = jQuery("#" + inputType + "_choice_selected_" + index);
 			isSelected = element.is(":checked");
 			
+			if ('list' == inputType) {
 			var element = jQuery("#" + inputType + "_choice_datepicker_" + index);
 			isDatePicker = element.is(":checked");
-
+			isDatePickerFormat = jQuery("#" + inputType + "_choice_datepickerformat_" + index).val();
+			}
 			field = GetSelectedField();
 
 			field.choices[index].text = text;
 			field.choices[index].value = field.enableChoiceValue ? value : text;
+			if ('list' == inputType) {
+			field.choices[index].isDatePickerFormat = isDatePickerFormat;
+			}
 
 			if(field.enablePrice){
 				var currency = GetCurrentCurrency();
@@ -178,6 +199,34 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
 		}
 
 		</script>
+		
+		<script type="text/javascript">
+		function itsp_gf_ajax_upload_function(){
+		jQuery('#field_columns input[name=choice_datepicker]').each(function() {
+			if (jQuery(this).is(":checked")) {
+					jQuery(this).parent("div").find(".itsg_date_format").show();
+				}
+				else {
+					jQuery(this).parent("div").find(".itsg_date_format").hide();
+				}
+		});
+		jQuery("#field_columns select.choice_datepickerformat").each(function(index){
+				jQuery(this).val(field.choices[index].isDatePickerFormat);
+			});
+
+		}
+	
+		jQuery('ul.gform_fields').on("click",  function(){
+			itsp_gf_ajax_upload_function();  
+		
+		jQuery('#field_columns').on("click", "input[name=choice_datepicker]", function(){
+			itsp_gf_ajax_upload_function();  
+		});
+		});
+		
+		</script>
+		
+		
 		<?php
 		} // END itsg_gp_list_field_datepicker_editor_js
 		
@@ -191,5 +240,3 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
 	}
     $ITSG_GF_List_Field_Date_Picker = new ITSG_GF_List_Field_Date_Picker();
 }
-
-?>
