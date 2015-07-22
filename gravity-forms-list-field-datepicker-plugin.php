@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Gravity Forms - List Field Date Picker
+Plugin Name: Date Picker in List Fields for Gravity Forms
 Description: Gives the option of adding a date picker to a list field column
 Version: 1.2
 Author: Adrian Gordon
