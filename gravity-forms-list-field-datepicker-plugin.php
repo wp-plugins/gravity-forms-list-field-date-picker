@@ -2,7 +2,7 @@
 /*
 Plugin Name: Date Picker in List Fields for Gravity Forms
 Description: Gives the option of adding a date picker to a list field column
-Version: 1.2
+Version: 1.2.1
 Author: Adrian Gordon
 Author URI: http://www.itsupportguides.com 
 License: GPL2
@@ -20,15 +20,23 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
          */
 		 public function __construct()
         {
-            // register actions
+			// register plugin functions through 'plugins_loaded' - 
+			// this delays the registration until all plugins have been loaded, ensuring it does not run before Gravity Forms is available.
+            add_action( 'plugins_loaded', array(&$this,'register_actions') );
+		}
+		
+		/*
+         * Register plugin functions
+         */
+		function register_actions() {
             if ((self::is_gravityforms_installed())) {
-			// start the plugin
-			add_filter('gform_column_input_content', array(&$this,'change_column_content'), 10, 6);
-			add_action('gform_enqueue_scripts', array(&$this,'datepicker_js'), 90, 3);
-			add_action('gform_editor_js', array(&$this,'editor_js'));
+				// start the plugin
+				add_filter('gform_column_input_content', array(&$this,'change_column_content'), 10, 6);
+				add_action('gform_enqueue_scripts', array(&$this,'datepicker_js'), 90, 2);
+				add_action('gform_editor_js', array(&$this,'editor_js'));
 			}
 		}
-
+			
 		/*
          * Changes column field if 'date field' option is ticked. Adds 'datepicker' class.
          */
