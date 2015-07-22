@@ -1,10 +1,10 @@
-=== Gravity Forms - List Field Date Picker ===
+=== Date Picker in List Fields for Gravity Forms ===
 Contributors: ovann86
 Donate link: http://www.itsupportguides.com/
 Tags: Gravity Forms
 Requires at least: 4.0
 Tested up to: 4.2.2
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,12 @@ You can also choose the date format for each datepicker. Options include:
 * yyyy-mm-dd
 * yyyy.mm.dd
 
+**Disclaimer**
+
+*Gravity Forms is a trademark of Rocketgenius, Inc.*
+
+*This plugins is provided “as is” without warranty of any kind, expressed or implied. The author shall not be liable for any damages, including but not limited to, direct, indirect, special, incidental or consequential damages or losses that occur out of the use or inability to use the plugin.*
+
 == Installation ==
 
 1. Install plugin from WordPress administration or upload folder to the `/wp-content/plugins/` directory
@@ -41,6 +47,13 @@ You can also choose the date format for each datepicker. Options include:
 2. Shows a list field using the jQuery datepicker
 
 == Changelog ==
+
+= 1.2 =
+* Improvement: Updated how field 'Date picker' option appears when editing a list field in the back-end form editor.
+* Maintenance: Updated back-end form editor JavaScript so it wont conflict with other plugins and is more adaptable to changes in the Gravity Forms JavaScript.
+* Fix: Resolve issue with plugin breaking single column list fields, but checking that field has columns before attempting to load and modify column contents.
+* Fix: Resolve PHP error messages - added isset( $choice["isDatePicker"] ) before calling array item, and check that list field has columns before calling column data.
+* Maintenance: Changed name from 'Gravity Forms - List Field Date Picker' to 'Date Picker in List Fields for Gravity Forms'.
 
 = 1.1 =
 * Feature: Added ability to select the date format for each datepicker field. Formats available are mm/dd/yyyy, dd/mm/yyyy, dd-mm-yyyy, dd.mm.yyyy, yyyy/mm/dd, yyyy-mm-dd, yyyy.mm.dd.
