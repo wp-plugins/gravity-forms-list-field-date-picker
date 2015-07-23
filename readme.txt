@@ -73,6 +73,12 @@ The example below will set the default date to 15-01-2015 (15 January 2015) - no
 	echo '15-01-2015';
 });`
 
+The example below will set the default date to the first day of the following year - note the date format is in m/d/Y
+
+`add_action('itsg_default_datepicker_date', function () {
+    echo date("m/d/Y",strtotime('first day of January next year'));
+});`
+
 For more information on the strtotime function, see [strtotime](http://php.net/manual/en/function.strtotime.php)
 
 For more information on the date function, see [date](http://php.net/manual/en/function.date.php)
