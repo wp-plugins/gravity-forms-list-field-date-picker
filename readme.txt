@@ -43,6 +43,40 @@ You can choose the date format for each datepicker. Options include:
 1. Add or open an existing list field
 1. With multiple columns enabled you will see a 'date field' option - when ticked the front end will use the jQuery datapicker
 
+== Frequently Asked Questions ==
+
+**How do I set a default date?**
+
+The 'itsg_default_datepicker_date' action is available to set a default date.
+
+To use this action you will need to add some code to your themes functions.php file, below the starting <?php line.
+
+The action takes a date formatted as a string, for example 01/01/2015. Your code could return a simple date, e.g. 01/06/2015 or using the PHP date function you could create a dynamic date, such as 'Monday of this week'.
+
+It is important that the format of the string matches the formatting of the date picker field.
+
+The example below will set the default date to the Monday of the current week - note the date format is d/m/Y
+
+`add_action('itsg_default_datepicker_date', function () {
+	echo date("d/m/Y",strtotime('monday this week'));
+});`
+
+The example below will set the default date to 20 days ahead of the current date - note the date format is yyyy.mm.dd
+
+`add_action('itsg_default_datepicker_date', function () {
+	echo date("Y.m.d",strtotime('+20 days'));
+});`
+
+The example below will set the default date to 15-01-2015 (15 January 2015) - note the date format is d-m-Y
+
+`add_action('itsg_default_datepicker_date', function () {
+	echo '15-01-2015';
+});`
+
+For more information on the strtotime function, see [strtotime](http://php.net/manual/en/function.strtotime.php)
+
+For more information on the date function, see [date](http://php.net/manual/en/function.date.php)
+
 == Screenshots ==
 
 1. Shows the 'Date field' option in the forms editor
@@ -50,10 +84,13 @@ You can choose the date format for each datepicker. Options include:
 
 == Changelog ==
 
+= 1.2.5 =
+* Feature: Added the ability to set a default date by calling the 'itsg_default_datepicker_date' action. See frequently asked questions for how to use this.
+
 = 1.2.4 =
-* Improvement: Added the ability to apply date picker to a single column list field (found under the appearance tab options).
-* Improvement: Included Gravity Forms date picker CSS. The same styles will be applied as seen in the 'date' field. This will be disabled if you have configured the Gravity Forms settings to not use their CSS styles.
-* Improvement: Added check so that JavaScript does not load on front-end form page if there are no pick picker enabled lists in the form.
+* Feature: Added the ability to apply date picker to a single column list field (found under the appearance tab options).
+* Feature: Included Gravity Forms date picker CSS. The same styles will be applied as seen in the 'date' field. This will be disabled if you have configured the Gravity Forms settings to not use their CSS styles.
+* Feature: Added check so that JavaScript does not load on front-end form page if there are no pick picker enabled lists in the form.
 
 = 1.2.3 =
 * Fix: Resolve issue with date picker not loading beyond the first row in ajax enabled multi-page forms.
@@ -62,7 +99,7 @@ You can choose the date format for each datepicker. Options include:
 * Fix: Resolve issue with plugin attempting to load before Gravity Forms has loaded, making this plugin not function.
 
 = 1.2 =
-* Improvement: Updated how field 'Date picker' option appears when editing a list field in the back-end form editor.
+* Feature: Updated how field 'Date picker' option appears when editing a list field in the back-end form editor.
 * Maintenance: Updated back-end form editor JavaScript so it wont conflict with other plugins and is more adaptable to changes in the Gravity Forms JavaScript.
 * Fix: Resolve issue with plugin breaking single column list fields, but checking that field has columns before attempting to load and modify column contents.
 * Fix: Resolve PHP error messages - added isset( $choice["isDatePicker"] ) before calling array item, and check that list field has columns before calling column data.

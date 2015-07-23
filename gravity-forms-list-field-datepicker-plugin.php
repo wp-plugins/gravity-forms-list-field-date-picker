@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Date Picker in List Fields for Gravity Forms
-Description: Allows you to turn a list field column into a 'date' field
-Version: 1.2.4
+Description: Gives the option of adding a date picker to a list field column
+Version: 1.2.5
 Author: Adrian Gordon
 Author URI: http://www.itsupportguides.com 
 License: GPL2
@@ -101,6 +101,12 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
 				jQuery(this).find('.datepicker').removeClass('hasDatepicker').removeAttr('id');
 				jQuery(this).find('.datepicker').unbind('.datepicker').datepicker();
 				jQuery(this).find('.datepicker').datepicker('destroy');
+				<?php
+				if(has_action('itsg_default_datepicker_date')) {
+					?> jQuery(".datepicker").datepicker("setDate","<?php do_action('itsg_default_datepicker_date'); ?> "); 
+				<?php
+				}
+				?>
 				gformInitDatepicker();
 			});
 			// run when new row is added
