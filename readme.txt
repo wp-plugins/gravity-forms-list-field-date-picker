@@ -4,7 +4,7 @@ Donate link: http://www.itsupportguides.com/
 Tags: Gravity Forms
 Requires at least: 4.0
 Tested up to: 4.2.2
-Stable tag: 1.2.1
+Stable tag: 1.2.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,6 +47,9 @@ You can also choose the date format for each datepicker. Options include:
 2. Shows a list field using the jQuery datepicker
 
 == Changelog ==
+
+= 1.2.3 =
+* Fix: Resolve issue with date picker not loading beyond the first row in ajax enabled multi-page forms.
 
 = 1.2.2 =
 * Fix: Resolve issue with plugin attempting to load before Gravity Forms has loaded, making this plugin not function.

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Date Picker in List Fields for Gravity Forms
 Description: Gives the option of adding a date picker to a list field column
-Version: 1.2.1
+Version: 1.2.3
 Author: Adrian Gordon
 Author URI: http://www.itsupportguides.com 
 License: GPL2
@@ -75,21 +75,24 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
 		?>
 		<script>
 		function itsg_gf_ajax_datepicker_function(self){
+			// run for each existing list row
 			jQuery('.gfield_list').each(function() {
 				jQuery(this).find('.datepicker').removeClass('hasDatepicker').removeAttr('id');
 				jQuery(this).find('.datepicker').unbind('.datepicker').datepicker();
 				jQuery(this).find('.datepicker').datepicker('destroy');
 				gformInitDatepicker();
 			});
-		}
-
-		jQuery(function(){
-		// run when page is loaded
-		itsg_gf_ajax_datepicker_function();  
 			// run when new row is added
 			jQuery('.gfield_list').on("click", ".add_list_item", function(){
 				itsg_gf_ajax_datepicker_function(jQuery(this));  
 			});
+		}
+
+		jQuery(function(){
+		// runs the main function when the page loads
+		jQuery(document).bind('gform_post_render', function($) {itsg_gf_ajax_datepicker_function(jQuery(this));  });
+		// runs the main function when the page loads (for ajax enabled forms)
+		jQuery(document).ready(function($) {itsg_gf_ajax_datepicker_function(jQuery(this));  });
 		});
 		</script> <?php
 		} // END datepicker_js_script
