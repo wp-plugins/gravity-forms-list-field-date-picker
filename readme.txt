@@ -4,19 +4,21 @@ Donate link: http://www.itsupportguides.com/
 Tags: Gravity Forms
 Requires at least: 4.0
 Tested up to: 4.2.2
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A date picker for the list field
+Allows you to turn a list field column into a 'date' field
 
 == Description ==
 
-Adds the ability to make the [Gravity Forms](http://www.gravityforms.com/ "Gravity Forms website") list field include a jQuery datepicker.
+Adds the ability to make the [Gravity Forms](http://www.gravityforms.com/ "Gravity Forms website") list field include a jQuery date picker.
 
-The plugin adds a 'Date field' option to each column (when a multiple columns enabled). When the 'Date field' option is ticked the field will use the jQuery datepicker on the frontend.
+The plugin allows you to choose if a list field or any list field columns use the jQuery date pick as seen in the Gravity Forms 'Date' field.
 
-You can also choose the date format for each datepicker. Options include:
+For multi-column lists, the date picker options are under the 'General' tab, below the list of columns. For single-column lists the date picker options are under the 'Appearance' tab.
+
+You can choose the date format for each datepicker. Options include:
 
 * mm/dd/yyyy
 * dd/mm/yyyy
@@ -47,6 +49,11 @@ You can also choose the date format for each datepicker. Options include:
 2. Shows a list field using the jQuery datepicker
 
 == Changelog ==
+
+= 1.2.4 =
+* Improvement: Added the ability to apply date picker to a single column list field (found under the appearance tab options).
+* Improvement: Included Gravity Forms date picker CSS. The same styles will be applied as seen in the 'date' field. This will be disabled if you have configured the Gravity Forms settings to not use their CSS styles.
+* Improvement: Added check so that JavaScript does not load on front-end form page if there are no pick picker enabled lists in the form.
 
 = 1.2.3 =
 * Fix: Resolve issue with date picker not loading beyond the first row in ajax enabled multi-page forms.
