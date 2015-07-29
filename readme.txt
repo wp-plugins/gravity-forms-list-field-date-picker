@@ -4,7 +4,7 @@ Donate link: http://www.itsupportguides.com/
 Tags: Gravity Forms
 Requires at least: 4.0
 Tested up to: 4.2.2
-Stable tag: 1.2.4
+Stable tag: 1.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,10 @@ For more information on the date function, see [date](http://php.net/manual/en/f
 2. Shows a list field using the jQuery datepicker
 
 == Changelog ==
+
+= 1.3 =
+* Fix: Update datepicker jQuery to improve performance.
+* Fix: Add CSS override to allow the list field datepicker to use the full column width. Override only applies if Gravity Forms styles are enabled.
 
 = 1.2.5 =
 * Feature: Added the ability to set a default date by calling the 'itsg_default_datepicker_date' action. See frequently asked questions for how to use this.

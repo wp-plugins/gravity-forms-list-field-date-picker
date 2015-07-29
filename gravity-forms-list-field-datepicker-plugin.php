@@ -2,7 +2,7 @@
 /*
 Plugin Name: Date Picker in List Fields for Gravity Forms
 Description: Gives the option of adding a date picker to a list field column
-Version: 1.2.5
+Version: 1.3
 Author: Adrian Gordon
 Author URI: http://www.itsupportguides.com 
 License: GPL2
@@ -84,6 +84,9 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
 							
 						wp_enqueue_style( 'gforms_datepicker_css', GFCommon::get_base_url() . "/css/datepicker{$min}.css", null, GFCommon::$version );
 						wp_print_styles( array( 'gforms_datepicker_css' ) );
+						
+						// patch to make datepicker column use full width - overrides Gravity Forms formsmain.min.css style
+						add_action('wp_footer', array(&$this,'list_field_datepicker_css_override'));
 					}
 				}
 			}
@@ -107,15 +110,18 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
 				<?php
 				}
 				?>
-				gformInitDatepicker();
-			});
-			// run when new row is added
-			jQuery('.gfield_list').on("click", ".add_list_item", function(){
-				itsg_gf_ajax_datepicker_function(jQuery(this));  
-			});
-		}
-
+			});						
+			
+			gformInitDatepicker();
+			
+		}		
 		jQuery(function(){
+		
+		// bind the datepicker function to the 'add list item' button click event
+		jQuery('.gfield_list').on("click", ".add_list_item", function(){
+			itsg_gf_ajax_datepicker_function(jQuery(this));  			
+		});
+		
 		// runs the main function when the page loads
 		jQuery(document).bind('gform_post_render', function($) {itsg_gf_ajax_datepicker_function(jQuery(this));  });
 		// runs the main function when the page loads (for ajax enabled forms)
@@ -345,6 +351,19 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
 			}
 		return false;
 		} // END list_has_datepicker_field
+		
+		/*
+         * CSS styles places in footer to override Gravity Forms CSS. Allows date picker fields to use full column width.
+         */
+        public function list_field_datepicker_css_override() {
+			?>
+			<style>
+			.gform_wrapper .gfield_list td.gfield_list_cell input {
+				width: 97.5% !important;
+			}
+			</style>
+			<?php
+		} // END list_field_datepicker_css_override
 		
 	}
     $ITSG_GF_List_Field_Date_Picker = new ITSG_GF_List_Field_Date_Picker();
