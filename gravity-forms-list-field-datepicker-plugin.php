@@ -358,7 +358,7 @@ if (!class_exists('ITSG_GF_List_Field_Date_Picker')) {
         public function list_field_datepicker_css_override() {
 			?>
 			<style>
-			.gform_wrapper .gfield_list td.gfield_list_cell input {
+			.gform_wrapper .gfield_list td.gfield_list_cell input.datepicker {
 				width: 97.5% !important;
 			}
 			</style>
