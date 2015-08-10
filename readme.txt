@@ -87,6 +87,7 @@ For more information on the date function, see [date](http://php.net/manual/en/f
 
 1. Shows the 'Date field' option in the forms editor
 2. Shows a list field using the jQuery datepicker
+3. Shows a list field using the jQuery datepicker, with the default Gravity Forms styles
 
 == Changelog ==
 
