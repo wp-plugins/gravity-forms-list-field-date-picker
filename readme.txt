@@ -90,7 +90,7 @@ For more information on the date function, see [date](http://php.net/manual/en/f
 
 ** How do I configure the datepicker **
 
-Rocketgenius have documentation on how to configure the datepicker in Gravity Forms, which can be found [here] (https://www.gravityhelp.com/documentation/article/gform_datepicker_options_pre_init/#2-no-weekends).
+Rocketgenius have documentation on how to configure the datepicker in Gravity Forms using the [gform_datepicker_options_pre_init hook](https://www.gravityhelp.com/documentation/article/gform_datepicker_options_pre_init/#2-no-weekends).
 
 As an example of how to implement this, the following code will disable weekends from the datepicker for all forms and all datepicker fields.
 
