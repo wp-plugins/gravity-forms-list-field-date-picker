@@ -2,8 +2,8 @@
 Contributors: ovann86
 Donate link: http://www.itsupportguides.com/
 Tags: Gravity Forms
-Requires at least: 4.0
-Tested up to: 4.2.2
+Requires at least: 4.2
+Tested up to: 4.3
 Stable tag: 1.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,11 +12,12 @@ Allows you to turn a list field column into a 'date' field
 
 == Description ==
 
-Adds the ability to make the [Gravity Forms](http://www.gravityforms.com/ "Gravity Forms website") list field include a jQuery date picker.
+> This plugin is an add-on for the <a href="https://www.e-junkie.com/ecom/gb.php?cl=54585&c=ib&aff=299380" target="_blank">Gravity Forms</a>. If you don't yet own a license of the best forms plugin for WordPress, go and <a href="https://www.e-junkie.com/ecom/gb.php?cl=54585&c=ib&aff=299380" target="_blank">buy one now</a>!
 
-The plugin allows you to choose if a list field or any list field columns use the jQuery date pick as seen in the Gravity Forms 'Date' field.
+**What does this plugin do?**
 
-For multi-column lists, the date picker options are under the 'General' tab, below the list of columns. For single-column lists the date picker options are under the 'Appearance' tab.
+* make any list field column a date picker field
+* works with single and multi-column list fields
 
 You can choose the date format for each datepicker. Options include:
 
@@ -27,6 +28,10 @@ You can choose the date format for each datepicker. Options include:
 * yyyy/mm/dd
 * yyyy-mm-dd
 * yyyy.mm.dd
+
+For multi-column lists, the date picker options are under the 'General' tab, below the list of columns. For single-column lists the date picker options are under the 'Appearance' tab.
+
+> See a demo of this plugin at [demo.itsupportguides.com/gravity-forms-list-field-date-picker/](http://demo.itsupportguides.com/gravity-forms-list-field-date-picker/ "demo website")
 
 **Disclaimer**
 
@@ -82,6 +87,24 @@ The example below will set the default date to the first day of the following ye
 For more information on the strtotime function, see [strtotime](http://php.net/manual/en/function.strtotime.php)
 
 For more information on the date function, see [date](http://php.net/manual/en/function.date.php)
+
+** How do I configure the datepicker **
+
+Rocketgenius have documentation on how to configure the datepicker in Gravity Forms, which can be found [here] (https://www.gravityhelp.com/documentation/article/gform_datepicker_options_pre_init/#2-no-weekends).
+
+As an example of how to implement this, the following code will disable weekends from the datepicker for all forms and all datepicker fields.
+
+`	add_action('wp_footer', function () {
+	?>
+	<script>
+	gform.addFilter( 'gform_datepicker_options_pre_init', function( optionsObj, formId, fieldId ) {
+		optionsObj.firstDay = 1;
+		optionsObj.beforeShowDay = jQuery.datepicker.noWeekends;
+		return optionsObj;
+	});
+	</script>
+	<?php
+	},10);`
 
 == Screenshots ==
 
